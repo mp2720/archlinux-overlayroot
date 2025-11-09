@@ -15,6 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+read -p 'Set up root overlay? [y/N] ' -n1 yn
+echo
+if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
+	exit 0
+fi
+
 trap rollback EXIT INT TERM
 
 opts_add_replace() {
@@ -154,7 +160,7 @@ _dir=""
 [ "x$OVLROOT_BASE_DEV" = "x" ]     && exit 1
 [ "x$OVLROOT_LIST_SEP" = "x" ]     && OVLROOT_LIST_SEP=","
 
-if [ "x$OVLROOT_LOWER_MODE" != "xrw" ] && [ "x$OVLROOT_LOWER_MODE" != "xro" ]; then
+if [ "x$OVLROOT_LOWER_MODE" != "xrw" -a "x$OVLROOT_LOWER_MODE" != "xro" ]; then
 	OVLROOT_LOWER_MODE="ro"
 fi
 
